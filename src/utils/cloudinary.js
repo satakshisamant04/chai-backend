@@ -7,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const uploadToCloudinary= async (localFilePath)=>{
+const uploadOnCloudinary = async (localFilePath) => {
     try {
        if(!localFilePath) return null
       const response= await cloudinary.uploader.upload(localFilePath, {
@@ -23,12 +23,6 @@ resource_type: "auto",
 }
 
 
-cloudinary.v2.uploader
-.upload("dog.mp4", {
-  resource_type: "video", 
-  public_id: "my_dog",
-  overwrite: true, 
-  notification_url: "https://mysite.example.com/notify_endpoint"})
-.then(result=>console.log(result));
+// Remove test code
 
 export { uploadOnCloudinary }
