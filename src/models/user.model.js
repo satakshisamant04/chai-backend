@@ -44,7 +44,7 @@ password:{
 refreshToken: {
         type: String
 }
-},{timeStamps: true})
+},{timestamps: true})
 
 userSchema.pre('save', async function (next) {
    if (!this.isModified('password')) {
@@ -77,9 +77,9 @@ userSchema.methods.generateRefreshTokens= function (){
         {
             _id: this._id,
         },
-        process.env.ACCESS_TOKEN_SECRET,
+        process.env.REFRESH_TOKEN_SECRET,
         {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
         }
     )
 }
