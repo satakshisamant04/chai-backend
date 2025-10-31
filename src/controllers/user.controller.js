@@ -32,12 +32,18 @@ if(existedUser){
     throw new ApiError(409, "User with given username or email already exists") 
 }
 
-const avatarLocalPath= req.files?.avatar[0]?.path;
-const coverImageLocalPath= req.files?.coverImage[0]?.path;
-
-if(!avatarLocalPath){
-    throw new ApiError (400, "Avatar is required")  
+// Safely read uploaded files. If the request was not sent as multipart/form-data
+// or the file fields are missing, provide a clear error instead of throwing
+// a generic "cannot read property of undefined" TypeError.
+if (!req.files || !req.files.avatar) {
+    throw new ApiError(
+        400,
+        'Avatar file is required. Send request as multipart/form-data with an image file in the "avatar" field'
+    );
 }
+
+const avatarLocalPath = req.files?.avatar[0]?.path;
+const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
 
 const avatar= await uploadOnCloudinary(avatarLocalPath)
 const coverImage=await uploadOnCloudinary(coverImageLocalPath)
